@@ -6,6 +6,11 @@ public class UserModel {
     private String name;
     private byte age;
 
+
+    public UserModel(){
+
+    }
+
     public UserModel(long id, String name, byte age) {
         this.id = id;
         this.name = name;

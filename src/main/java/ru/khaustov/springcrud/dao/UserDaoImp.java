@@ -31,8 +31,10 @@ public class UserDaoImp implements UserDao{
     }
 
     @Override
-    public String addUser() {
-        return null;
+    public void addUser(UserModel user) {
+        user.setId(++id);
+        users.add(user);
+
     }
 
     @Override

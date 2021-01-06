@@ -9,7 +9,7 @@ public interface UserDao {
 
     public UserModel getUser(long id);
 
-    public String addUser();
+    public void addUser(UserModel user);
 
     public String updateUser(long id);
 

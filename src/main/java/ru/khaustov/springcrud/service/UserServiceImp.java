@@ -24,8 +24,8 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public String addUser() {
-        return userDao.addUser();
+    public void addUser(UserModel user) {
+        userDao.addUser(user);
     }
 
     @Override

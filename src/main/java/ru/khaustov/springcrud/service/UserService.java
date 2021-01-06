@@ -9,7 +9,7 @@ public interface UserService {
 
     public UserModel getUser(Long id);
 
-    public String addUser();
+    public void addUser(UserModel user);
 
     public String updateUser(long id);
 
