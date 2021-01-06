@@ -29,12 +29,12 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public String updateUser(long id) {
-        return userDao.updateUser(id);
+    public void updateUser(long id, UserModel user) {
+        userDao.updateUser(id, user);
     }
 
     @Override
-    public String deleteUser(long id) {
-        return deleteUser(id);
+    public void deleteUser(long id) {
+        userDao.deleteUser(id);
     }
 }

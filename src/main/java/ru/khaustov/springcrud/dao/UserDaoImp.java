@@ -38,12 +38,13 @@ public class UserDaoImp implements UserDao{
     }
 
     @Override
-    public String updateUser(long id) {
-        return null;
+    public void updateUser(long id, UserModel upUser) {
+        getUser(id).setName(upUser.getName());
+        getUser(id).setAge(upUser.getAge());
     }
 
     @Override
-    public String deleteUser(long id) {
-        return null;
+    public void deleteUser(long id) {
+        users.removeIf(x -> x.getId() == id);
     }
 }
