@@ -8,4 +8,10 @@ public interface UserService {
     public List<UserModel> getAllUsers();
 
     public UserModel getUser(Long id);
+
+    public String addUser();
+
+    public String updateUser(long id);
+
+    public String deleteUser(long id);
 }

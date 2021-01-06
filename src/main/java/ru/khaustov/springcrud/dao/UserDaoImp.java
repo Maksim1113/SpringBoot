@@ -29,4 +29,19 @@ public class UserDaoImp implements UserDao{
                 .findAny().orElse(null);
         return user;
     }
+
+    @Override
+    public String addUser() {
+        return null;
+    }
+
+    @Override
+    public String updateUser(long id) {
+        return null;
+    }
+
+    @Override
+    public String deleteUser(long id) {
+        return null;
+    }
 }
