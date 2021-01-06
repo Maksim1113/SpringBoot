@@ -9,7 +9,7 @@ import java.util.List;
 
 @Controller
 public class StartController {
-    @GetMapping("/tt")
+    @GetMapping("/new")
     public String getStart(Model model){
         List<String> message = new ArrayList<>();
         message.add("Hello my dear friend");
