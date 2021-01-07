@@ -24,6 +24,15 @@
     <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}" >
         <input type="submit" value="Delete user"/>
     </form>
+    <br/>
+    <br/>
+    <br/>
+    <form th:method="GET" th:action="@{/users/update/{id}(id=${user.getId()})}" >
+        <input type="submit" value="Update user"/>
+    </form>
+
+
+
     </tbody>
 </table>
 </body>
