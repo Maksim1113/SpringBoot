@@ -1,9 +1,18 @@
 package ru.khaustov.springcrud.models;
 
-public class UserModel {
+import javax.persistence.*;
+import java.io.Serializable;
 
+@Entity
+@Table(name = "users")
+public class UserModel implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "age")
     private byte age;
 
 
