@@ -20,8 +20,7 @@ public class UserModel implements Serializable {
 
     }
 
-    public UserModel(long id, String name, byte age) {
-        this.id = id;
+    public UserModel(String name, byte age) {
         this.name = name;
         this.age = age;
     }
