@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.khaustov.springcrud.models.UserModel;
 import ru.khaustov.springcrud.service.UserService;
-import ru.khaustov.springcrud.service.UserServiceImp;
 
 import java.util.List;
 
@@ -23,19 +22,11 @@ public class UserController {
         return "getUsers";
     }
 
-    /*@GetMapping("/{id}")
-    public String user(@PathVariable("id") long id, Model model){
-        UserModel userModel = userService.getUser(id);
-        model.addAttribute("user", userModel);
-        return "getUser";
-
-    }*/
     @GetMapping("/{id}")
     public String user(@ModelAttribute("user") UserModel edUser, Model model){
-        UserModel userModel = userService.getUser(edUser.getId());
-        model.addAttribute("user", userModel);
-        return "getUser";
-
+        UserModel user = userService.getUser(edUser.getId());
+        model.addAttribute("user", user);
+        return "newUser";
     }
 
 
@@ -46,41 +37,14 @@ public class UserController {
 
     }
 
-    @GetMapping("/edit")
-    public String setUserId(Model model){
-        model.addAttribute("user", new UserModel());
-        return "editUser";
-    }
-
-
     @PostMapping()
     public String createUser(@ModelAttribute("user") UserModel user){
         userService.addUser(user);
         return "redirect:/users";
     }
-    /*@GetMapping ("/{id}/update")
-    public String formUpdate(@PathVariable("id") long id, Model model){
-        model.addAttribute("user", userService.getUser(id));
-        return "update";
-    }*/
-    @GetMapping ("/update/{id}")
-    public String formUpdate(@PathVariable("id") long id, Model model){
-        model.addAttribute("user", userService.getUser(id));
-        return "update";
-    }
-    /*@GetMapping ("/update/{id}")
-    public String formUpdate(@ModelAttribute("user1") UserModel upUser, Model model){
-        model.addAttribute("user", userService.getUser(upUser.getId()));
-        return "update";
-    }*/
-    @PatchMapping("/{id}")
-    public String update(@PathVariable("id") long id, @ModelAttribute("user") UserModel upUser){
-        userService.updateUser(id, upUser);
-        return "redirect:/users";
-    }
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable("id") long id){
-        userService.deleteUser(id);
+    public String deleteUser(@ModelAttribute("user") UserModel user){
+        userService.deleteUser(user.getId());
         return "redirect:/users";
     }
 

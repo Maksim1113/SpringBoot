@@ -12,6 +12,7 @@
         <th>id</th>
         <th>name</th>
         <th>age</th>
+        <th>Operation</th>
     </tr>
     </thead>
     <tbody>
@@ -19,9 +20,17 @@
         <td th:text="${user.getId()}"/>
         <td th:text="${user.getName()}"/>
         <td th:text="${user.getAge()}"/>
+        <td>
+            <form th:method="GET" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
+                <input type="submit" value="Update"/>
+            </form>
+            <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
+                <input type="submit" value="Delete"/>
+            </form>
+        </td>
     </tr>
 
-    <a href="/users/new"> Create new user</a> or <a href="/users/edit"> Edit user</a>
+    <a href="/users/new"> Create new user</a>
 
 
     </tbody>

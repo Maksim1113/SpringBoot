@@ -11,7 +11,5 @@ public interface UserService {
 
     public void addUser(UserModel user);
 
-    public void updateUser(long id, UserModel user);
-
     public void deleteUser(long id);
 }
