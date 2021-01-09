@@ -1,30 +1,23 @@
 package ru.khaustov.springcrud.dao;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.khaustov.springcrud.models.UserModel;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao{
-    private SessionFactory sessionFactory;
-    @Autowired
-    public UserDaoImp(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Override
     @Transactional
     public List<UserModel> getAllUsers(){
 
-            Session session = sessionFactory.getCurrentSession();
-        List<UserModel> users = session.createQuery("from UserModel",
-                UserModel.class).getResultList();
+        List<UserModel> users = entityManager.createQuery("select a from UserModel a", UserModel.class).getResultList();
         return users;
     }
 
@@ -32,22 +25,25 @@ public class UserDaoImp implements UserDao{
     @Transactional
     public UserModel getUser(long id){
         UserModel user = new UserModel();
-        Session session = sessionFactory.getCurrentSession();
-        return user = session.get(UserModel.class, id);
+        Query query = entityManager.createQuery("select e from UserModel e where e.id = :id");
+        query.setParameter("id", id);
+        return user = (UserModel) query.getSingleResult();
     }
 
     @Override
     @Transactional
     public void addUser(UserModel user) {
-            Session session = sessionFactory.getCurrentSession();
-            session.saveOrUpdate(user);
+        if (user.getId() == 0) {
+            entityManager.persist(user);
+        } else {
+            entityManager.merge(user);
+        }
     }
 
     @Override
     @Transactional
-    public void deleteUser(long id) {
-        Session session = sessionFactory.getCurrentSession();
-        session.createQuery("delete from UserModel " +
-                "where id = :id").setParameter("id", id).executeUpdate();
+    public void deleteUser(long id){
+        String sql = "DELETE FROM UserModel WHERE id = :id";
+        entityManager.createQuery(sql).setParameter("id", id).executeUpdate();
     }
 }
