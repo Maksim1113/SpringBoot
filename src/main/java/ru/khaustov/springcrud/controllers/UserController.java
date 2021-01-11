@@ -10,19 +10,24 @@ import ru.khaustov.springcrud.service.UserService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping()
+    @GetMapping("/start")
+    public String start(){
+        return "start";
+    }
+
+    @GetMapping("/users")
     public String getAllUsers(Model model){
         List<UserModel> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "getUsers";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public String user(@ModelAttribute("user") UserModel edUser, Model model){
         UserModel user = userService.getUser(edUser.getId());
         model.addAttribute("user", user);
@@ -30,19 +35,32 @@ public class UserController {
     }
 
 
-    @GetMapping("/new")
+    @GetMapping("/users/new")
     public String setNewUser(Model model){
         model.addAttribute("user", new UserModel());
         return "newUser";
 
     }
 
-    @PostMapping()
+    @PostMapping("/users")
     public String createUser(@ModelAttribute("user") UserModel user){
         userService.addUser(user);
         return "redirect:/users";
     }
-    @DeleteMapping("/{id}")
+
+    @GetMapping("/users/registration")
+    public String regNewUser(Model model){
+        model.addAttribute("user", new UserModel());
+        return "registration";
+
+    }
+    @PostMapping("/users/registration")
+    public String regUser(@ModelAttribute("user") UserModel user){
+        userService.addUser(user);
+        return "redirect:/start";
+    }
+
+    @DeleteMapping("/users/{id}")
     public String deleteUser(@ModelAttribute("user") UserModel user){
         userService.deleteUser(user.getId());
         return "redirect:/users";
