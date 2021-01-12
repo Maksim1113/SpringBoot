@@ -1,6 +1,8 @@
 package ru.khaustov.springcrud.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +19,32 @@ public class UserController {
 
     @GetMapping("/start")
     public String start(){
+        //Authentication a = SecurityContextHolder.getContext().getAuthentication();
         return "start";
     }
 
-    @GetMapping("/users")
+    @GetMapping("/registration")
+    public String regNewUser(Model model){
+        model.addAttribute("user", new UserModel());
+        return "registration";
+
+    }
+
+
+    @PostMapping("/registration")
+    public String regUser(@ModelAttribute("user") UserModel user){
+        userService.addUser(user);
+        return "redirect:/start";
+    }
+
+    @GetMapping("/admin")
     public String getAllUsers(Model model){
         List<UserModel> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "getUsers";
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/admin/{id}")
     public String user(@ModelAttribute("user") UserModel edUser, Model model){
         UserModel user = userService.getUser(edUser.getId());
         model.addAttribute("user", user);
@@ -35,35 +52,24 @@ public class UserController {
     }
 
 
-    @GetMapping("/users/new")
+    @GetMapping("/admin/new")
     public String setNewUser(Model model){
         model.addAttribute("user", new UserModel());
         return "newUser";
 
     }
 
-    @PostMapping("/users")
+    @PostMapping("/admin")
     public String createUser(@ModelAttribute("user") UserModel user){
         userService.addUser(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
-    @GetMapping("/users/registration")
-    public String regNewUser(Model model){
-        model.addAttribute("user", new UserModel());
-        return "registration";
 
-    }
-    @PostMapping("/users/registration")
-    public String regUser(@ModelAttribute("user") UserModel user){
-        userService.addUser(user);
-        return "redirect:/start";
-    }
-
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/admin/{id}")
     public String deleteUser(@ModelAttribute("user") UserModel user){
         userService.deleteUser(user.getId());
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
 

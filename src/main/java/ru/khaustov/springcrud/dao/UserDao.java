@@ -12,4 +12,6 @@ public interface UserDao {
     public void addUser(UserModel user);
 
     public void deleteUser(long id);
+
+    UserModel getUserByName(String username);
 }

@@ -46,4 +46,12 @@ public class UserDaoImp implements UserDao{
         String sql = "DELETE FROM UserModel WHERE id = :id";
         entityManager.createQuery(sql).setParameter("id", id).executeUpdate();
     }
+
+    @Override
+    public UserModel getUserByName(String username) {
+        UserModel user = new UserModel();
+        Query query = entityManager.createQuery("select e from UserModel e where e.username = :username");
+        query.setParameter("username", username);
+        return user = (UserModel) query.getSingleResult();
+    }
 }

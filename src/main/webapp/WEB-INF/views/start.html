@@ -9,11 +9,11 @@
 
 <body>
 <h3>Hi you are in START Page</h3>
-<form th:method="GET" th:action="@{/users/registration}">
+<form th:method="GET" th:action="@{/registration}">
     <input type="submit" value="Registration"/>
 </form>
 <br>
-<form th:method="DELETE" th:action="@{/users/new}">
+<form th:method="POST" th:action="@{/login}">
     <input type="submit" value="Sign in"/>
 </form>
 </body>

@@ -1,11 +1,16 @@
 package ru.khaustov.springcrud.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class UserModel implements Serializable {
+public class UserModel implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +19,15 @@ public class UserModel implements Serializable {
     private String name;
     @Column(name = "age")
     private byte age;
+    @Column(name = "username",unique = true)
+    private String username;
+    @Column(name = "password")
+    private String password;
 
+    @ManyToMany
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleModel> roles;
 
     public UserModel(){
 
@@ -48,4 +61,56 @@ public class UserModel implements Serializable {
     public void setAge(byte age) {
         this.age = age;
     }
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Collection<RoleModel> getRoles() {
+        return roles;
+    }
+
+
+    public void setRoles(Set<RoleModel> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return  roles;
+    }
+
+
+
 }
