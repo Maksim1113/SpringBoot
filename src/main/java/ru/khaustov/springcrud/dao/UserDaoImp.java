@@ -1,12 +1,15 @@
 package ru.khaustov.springcrud.dao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.khaustov.springcrud.models.RoleModel;
 import ru.khaustov.springcrud.models.UserModel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class UserDaoImp implements UserDao{
@@ -34,6 +37,11 @@ public class UserDaoImp implements UserDao{
     @Transactional
     public void addUser(UserModel user) {
         if (user.getId() == 0) {
+           /* Set<RoleModel> roles = new HashSet<>();
+            RoleModel roleModel = new RoleModel();
+            roleModel.setRole("ROLE_USER");
+            roles.add(roleModel);
+            user.setRoles(roles);*/
             entityManager.persist(user);
         } else {
             entityManager.merge(user);

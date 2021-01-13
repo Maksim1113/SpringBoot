@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.khaustov.springcrud.models.UserModel;
 import ru.khaustov.springcrud.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,6 +36,18 @@ public class UserController {
     public String regUser(@ModelAttribute("user") UserModel user){
         userService.addUser(user);
         return "redirect:/start";
+    }
+
+    @GetMapping("/user")
+    public String userPage(Model model){
+        Authentication a = SecurityContextHolder.getContext().getAuthentication();
+        String name = a.getName();
+        UserModel userModel = userService.getUserByName(name);
+        List<UserModel> users = new ArrayList<>();
+        users.add(userModel);
+        model.addAttribute("users", users);
+        return "userInfo";
+
     }
 
     @GetMapping("/admin")
