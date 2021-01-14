@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import ru.khaustov.springcrud.service.UserDetailsServiceImpl;
 
@@ -37,17 +38,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // http.csrf().disable(); - попробуйте выяснить сами, что это даёт
+        http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/start").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/user/**").access("hasRole('ROLE_USER')")
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/user/**").access("hasAnyRole('USER', 'ADMIN')")
+                .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .and()
                 .formLogin()
                 .successHandler(loginSuccessHandler)
                 .and()
-                .logout().logoutSuccessUrl("/start");
+                .logout().logoutSuccessUrl("/start").permitAll();
+
+        //access("hasRole('USER')")
+        //access("hasRole('ADMIN')")
 
     }
 }

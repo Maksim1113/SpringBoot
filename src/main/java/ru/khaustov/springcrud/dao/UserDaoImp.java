@@ -1,4 +1,6 @@
 package ru.khaustov.springcrud.dao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.khaustov.springcrud.models.RoleModel;
@@ -7,6 +9,7 @@ import ru.khaustov.springcrud.models.UserModel;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +18,7 @@ import java.util.Set;
 public class UserDaoImp implements UserDao{
     @PersistenceContext
     EntityManager entityManager;
+
 
     @Override
     @Transactional
@@ -37,11 +41,7 @@ public class UserDaoImp implements UserDao{
     @Transactional
     public void addUser(UserModel user) {
         if (user.getId() == 0) {
-           /* Set<RoleModel> roles = new HashSet<>();
-            RoleModel roleModel = new RoleModel();
-            roleModel.setRole("ROLE_USER");
-            roles.add(roleModel);
-            user.setRoles(roles);*/
+           user.setRoles(Collections.singleton(new RoleModel(1L, "ROLE_USER")));
             entityManager.persist(user);
         } else {
             entityManager.merge(user);

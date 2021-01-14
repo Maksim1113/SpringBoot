@@ -10,6 +10,8 @@
 <body>
 <form th:method="POST" th:action="@{/admin}" th:object="${user}">
     <input type="hidden" name="Id" th:value="${user.id}">
+    <input type="hidden" name="Username" th:value="${user.username}">
+    <input type="hidden" name="Password" th:value="${user.password}">
 <label for="name"> Enter name </label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>

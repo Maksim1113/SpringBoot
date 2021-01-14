@@ -15,18 +15,20 @@ public class UserModel implements Serializable, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "age")
     private byte age;
+
     @Column(name = "username",unique = true)
     private String username;
+
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleModel> roles;
 
     public UserModel(){
@@ -88,22 +90,22 @@ public class UserModel implements Serializable, UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override

@@ -35,7 +35,6 @@ public class UserServiceImp implements UserService{
 
     @Override
     public UserModel getUserByName(String username) {
-        userDao.getUserByName(username);
-        return null;
+        return userDao.getUserByName(username);
     }
 }

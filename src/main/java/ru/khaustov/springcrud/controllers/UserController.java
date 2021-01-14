@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.khaustov.springcrud.models.UserModel;
 import ru.khaustov.springcrud.service.UserService;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,14 +40,12 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String userPage(Model model){
-        Authentication a = SecurityContextHolder.getContext().getAuthentication();
-        String name = a.getName();
-        UserModel userModel = userService.getUserByName(name);
+    public String userPage(Principal principal, Model model){
         List<UserModel> users = new ArrayList<>();
-        users.add(userModel);
+        users.add(userService.getUserByName(principal.getName()));
         model.addAttribute("users", users);
         return "userInfo";
+
 
     }
 

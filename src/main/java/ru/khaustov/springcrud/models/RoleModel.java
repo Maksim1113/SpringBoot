@@ -3,6 +3,7 @@ package ru.khaustov.springcrud.models;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -14,6 +15,10 @@ public class RoleModel implements GrantedAuthority {
 
     @Column(name = "role")
     private String role;
+
+    @Transient
+    @ManyToMany(mappedBy = "roles")
+    private Set<UserModel> users;
 
     public RoleModel(){
 
