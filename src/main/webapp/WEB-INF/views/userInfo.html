@@ -4,6 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>User</title>
+    <style>
+        table {
+            width: 300px;
+            border: 1px solid green;
+            margin: auto;
+        }
+        td {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <table class="table">
@@ -25,10 +35,11 @@
         <td th:text="${user.getPassword()}"/>
     </tr>
 
-    <a href="/logout"> Exit</a>
+
 
 
     </tbody>
 </table>
+<a href="/logout"> Exit</a>
 </body>
 </html>
